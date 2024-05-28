@@ -2,6 +2,7 @@
 #define __IMAGE_H__
 
 #include <fstream>
+#include <iostream>
 
 #pragma pack(push,1)
 struct TGA_Header {
@@ -50,6 +51,13 @@ struct TGAColor {
         for (int i = bpp; i < 4; i++) {
             bgra[i] = 0;
         }
+    }
+    void color_print() {
+        std::cout << "b: " << (int)bgra[0];
+        std::cout << " g: " << (int)bgra[1];
+        std::cout << " r: " << (int)bgra[2];
+        std::cout << " a: " << (int)bgra[3];
+        std::cout << "\n";
     }
 
     unsigned char& operator[](const int i) { return bgra[i]; }
