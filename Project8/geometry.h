@@ -9,6 +9,12 @@ template<size_t DimCols, size_t DimRows, typename T> class mat;
 
 template <size_t DIM, typename T> struct vec {
     vec() { for (size_t i = DIM; i--; data_[i] = T()); }
+    void print_() {
+        for (size_t i = 0; i++; ) {
+            std::cout << (T)data_[i];
+        }
+        std::cout << "\n";
+    }
     T& operator[](const size_t i) { assert(i < DIM); return data_[i]; }
     const T& operator[](const size_t i) const { assert(i < DIM); return data_[i]; }
 private:
@@ -20,6 +26,12 @@ private:
 template <typename T> struct vec<2, T> {
     vec() : x(T()), y(T()) {}
     vec(T X, T Y) : x(X), y(Y) {}
+
+    void print_() {
+        std::cout << "x: " << x << "y: " << y;
+        std::cout << "\n";
+    }
+
     template <class U> vec<2, T>(const vec<2, U>& v);
     T& operator[](const size_t i) { assert(i < 2); return i <= 0 ? x : y; }
     const T& operator[](const size_t i) const { assert(i < 2); return i <= 0 ? x : y; }
@@ -32,6 +44,12 @@ template <typename T> struct vec<2, T> {
 template <typename T> struct vec<3, T> {
     vec() : x(T()), y(T()), z(T()) {}
     vec(T X, T Y, T Z) : x(X), y(Y), z(Z) {}
+
+    void print_() {
+        std::cout << "x: " << x << "y: " << y << "z: " << z;
+        std::cout << "\n";
+    }
+
     template <class U> vec<3, T>(const vec<3, U>& v);
     T& operator[](const size_t i) { assert(i < 3); return i <= 0 ? x : (1 == i ? y : z); }
     const T& operator[](const size_t i) const { assert(i < 3); return i <= 0 ? x : (1 == i ? y : z); }
