@@ -349,9 +349,17 @@ struct GouraudShader : public IShader {
         Vec3f l = proj<3>(uniform_M * embed<4>(light_dir)).normalize();
         //n.print_();
         //proj<3>(uniform_M * embed<4>(light_dir)).print_();
-        float intensity = std::max(0.f, n * l);
+
+        Vec3f r = (n * (n * l * 2.f) - l).normalize();   // reflected light
+        float spec = pow(std::max(r.z, 0.0f), model->specular(uv));
+        float diff = std::max(0.f, n * l);
+        TGAColor c = model->diffuse(uv);
+        color = c;
+        for (int i = 0; i < 3; i++) color[i] = std::min<float>(5 + c[i] * (diff + .1* spec), 255);
+        return false;
+        //float intensity = std::max(0.f, n * l);
         //std::cout << intensity;
-        color = model->diffuse(uv) * intensity; // well duh
+        //color = model->diffuse(uv) * intensity; // well duh
         //model->diffuse(uv).color_print();
         
         return false;                              // no, we do not discard this pixel
